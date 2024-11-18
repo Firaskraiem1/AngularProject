@@ -1,16 +1,31 @@
 <h3>Liste Residences</h3>
 
 <div class="container">
-    <div *ngFor="let residence of listResidences">
+    <input [(ngModel)]="filterAddress" (input)="filter()">
+    <br>
+    <br>
+    <div *ngFor="let residence of filtredResidences">
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" [src]="residence.image" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">
                     {{residence.name}}
                 </h5>
-                <h6 *ngIf="residenceSelected==residence">{{residenceSelected.address}}</h6>
+                <div [ngSwitch]="residence.status">
+                    <h6 *ngSwitchCase="'Disponible'">✔️Disponible</h6>
+                    <h6 *ngSwitchCase="'Vendu'">💰Vendu</h6>
+                    <h6 *ngSwitchCase="'En Construction'">🏢En Construction</h6>
+
+                </div>
+                <h6 *ngIf="residenceSelected==residence">Address: {{residenceSelected.address}}</h6>
             </div>
             <button class="btn btn-primary" (click)="showLocation(residence)">Show Location</button>
+
+            <button (click)="like(residence)">
+                <div *ngIf="!liked||residenceSelected!=residence">👍</div>
+                <div *ngIf="liked&&residenceSelected==residence">👎</div>
+            </button>
         </div>
+
     </div>
 </div>
