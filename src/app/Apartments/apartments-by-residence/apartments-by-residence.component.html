@@ -1,0 +1,19 @@
+<h2>Appartements pour Résidence {{residenceSelected?.name}} </h2>
+<div class="container">
+    <div *ngFor="let appartement of listApartments">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5>ApartNum: {{appartement?.apartNum}}</h5>
+                <h5>FloorNum: {{appartement?.floorNum}}</h5>
+                <h5>Surface: {{appartement?.surface}}</h5>
+                <h5>Terrace: {{appartement?.terrace}}</h5>
+                <h5>Surfaceterrace: {{appartement?.surfaceterrace}}</h5>
+                <h5>Category: {{appartement?.category}}</h5>
+                <h5>ResidenceId: {{appartement?.ResidenceId}}</h5>
+
+            </div>
+        </div>
+
+    </div>
+    <button class="btn btn-primary" style="margin-top: 5px;" routerLink="/addApartment">Ajouter un appartement</button>
+</div>

@@ -1,11 +1,11 @@
 <h3>Liste Residences</h3>
 
 <div class="container">
-    <input [(ngModel)]="filterAddress" (input)="filter()">
+    <input [(ngModel)]="filterAddress" (input)="filter()" placeholder="Chercher une résidence">
     <br>
     <br>
     <div *ngFor="let residence of filtredResidences">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;margin-bottom: 7px;">
             <img class="card-img-top" [src]="residence.image" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">
@@ -18,14 +18,20 @@
 
                 </div>
                 <h6 *ngIf="residenceSelected==residence">Address: {{residenceSelected.address}}</h6>
+                <div><a [routerLink]="['/apartments/residence/',residence.id]">ApartmentsList</a></div>
             </div>
-            <button class="btn btn-primary" (click)="showLocation(residence)">Show Location</button>
+            <button style="margin-bottom: 5px;" class="btn btn-primary" (click)="showLocation(residence)">Show
+                Location</button>
 
-            <button (click)="like(residence)">
+            <button style="margin-bottom: 5px;" class="btn btn-primary" (click)="like(residence)">
                 <div *ngIf="!liked||residenceSelected!=residence">👍</div>
                 <div *ngIf="liked&&residenceSelected==residence">👎</div>
             </button>
+
+            <button class="btn btn-primary" (click)="details(residence.id)">Détails</button>
         </div>
+
 
     </div>
 </div>
+<router-outlet></router-outlet>

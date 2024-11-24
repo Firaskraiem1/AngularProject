@@ -1,0 +1,20 @@
+<h3>Liste Residences</h3>
+
+<div class="container">
+
+    <div *ngFor="let residence of listResidences">
+        <div class="card" style="width: 18rem;margin-bottom: 7px;">
+            <img class="card-img-top" [src]="residence.image" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{residence.name}}
+                </h5>
+                <div [ngSwitch]="residence.status">
+                    <h6 *ngSwitchCase="'Disponible'">✔️Disponible</h6>
+                    <h6 *ngSwitchCase="'Vendu'">💰Vendu</h6>
+                    <h6 *ngSwitchCase="'En Construction'">🏢En Construction</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

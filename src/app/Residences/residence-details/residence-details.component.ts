@@ -1,14 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Residence } from 'src/app/Core/Models/residence';
 
 @Component({
-  selector: 'app-residences',
-  templateUrl: './residences.component.html',
-  styleUrls: ['./residences.component.css']
+  selector: 'app-residence-details',
+  templateUrl: './residence-details.component.html',
+  styleUrls: ['./residence-details.component.css']
 })
-export class ResidencesComponent {
-  constructor(private _router: Router) { }
+export class ResidenceDetailsComponent implements OnInit {
+  residenceIndex!: number;
+  constructor(private activatedroute: ActivatedRoute, private _router: Router) { }
+  residenceId!: number;
+  residenceSelected?: Residence;
+  ngOnInit(): void {
+    this.activatedroute.params.subscribe(params => {
+      this.residenceId = params['id'];
+      this.residenceSelected = this.listResidences.find(r => r.id == this.residenceId);
+    });
+  }
+
   listResidences: Residence[] = [
     {
       id: 1,
@@ -61,32 +71,16 @@ export class ResidencesComponent {
   ];
 
 
-  residenceSelected!: Residence;
-  showLocation(residence: Residence): void {
-    if (residence.address !== "inconnu") {
-      this.residenceSelected = residence;
-    } else {
-      alert("L'adresse de résidence " + residence.name + " est inconnu");
+  next() {
+    this.residenceIndex = this.listResidences.findIndex(r => r == this.residenceSelected);
+    if (this.residenceIndex != this.listResidences.length - 1) {
+      this.residenceSelected = this.listResidences[this.residenceIndex + 1];
     }
   }
-  liked: boolean = false
-  favoris!: Residence[];
-  like(r: Residence) {
-    this.liked = !this.liked;
-    this.residenceSelected = r;
-    if (this.liked) {
-      this.favoris.push(r);
-    } else {
-      this.favoris = this.favoris.filter(res => res.id != r.id);
-    }
+  add() {
+    this._router.navigate(['/addResidence']);
   }
-  filtredResidences: Residence[] = this.listResidences;
-  filterAddress: string = "";
-  filter() {
-    this.filtredResidences = this.listResidences.filter(r => r.address.toLowerCase().includes(this.filterAddress.toLowerCase()));
-  }
-
-  details(id: number) {
-    this._router.navigate(['/residenceDetails', id]);
+  update() {
+    this._router.navigate(['/addResidence']);
   }
 }
